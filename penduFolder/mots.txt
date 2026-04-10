@@ -209,7 +209,6 @@ nature
 racine
 brume
 clairière
-sabbat
 totem
 alchimie
 philosophe
@@ -328,3 +327,4 @@ runes
 trésor
 coffre
 butin
+gourde

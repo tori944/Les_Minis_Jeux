@@ -3,6 +3,8 @@ from random import randint
 from re import sub      # revoir ce module
 from initRoot import *
 
+from utils import resource_path ## de la part de l'ia
+
 
 def pendu ():
     """fonction du jeu du pendu"""
@@ -11,7 +13,7 @@ def pendu ():
 
     window = Toplevel(root)
     window.title("jeu du pendu")
-    window.geometry("400x350")
+    window.geometry("450x350")
 
     motTk = StringVar()
     lettresTk = StringVar()
@@ -34,7 +36,9 @@ def pendu ():
         global mot
         """définit le mot à trouver"""
 
-        f = open("penduFolder/mots.txt", "r", encoding='utf-8')
+        f = open(resource_path("penduFolder/mots.txt"), "r", encoding='utf-8') ## pour le fichier executable de la part de l'ia
+
+        # f = open("penduFolder/mots.txt", "r", encoding='utf-8')
 
         ligne = randint(1,330)
         i = 1
@@ -63,13 +67,14 @@ def pendu ():
 
 
     def jouer ():
-        global lettresDejaDonne, erreur
+        global lettresDejaDonne, erreur, lettresDejaDonneAffiche
 
         lettresDejaDonne = []  
+        lettresDejaDonneAffiche = []  # la liste qu'on va affiché, pas la peine d'é"crire é e ê è -> simplement e
         erreur = 0 
         
 
-        lettresTk.set(lettresDejaDonne)
+        lettresTk.set(lettresDejaDonneAffiche)
         erreurTk.set(erreur)
         
         
@@ -110,7 +115,7 @@ def pendu ():
         if motVar == oldMotVar:
             erreur += 1
             erreurTk.set(erreur)
-            if erreur == 9:
+            if erreur == 6:
                 serie = 0
                 serieTk.set(serie)
                 lose()
@@ -127,10 +132,12 @@ def pendu ():
         if len(lettre) > 1:
             for l in lettre :
                 lettresDejaDonne.append(l)
+            lettresDejaDonneAffiche.append(lettre[0])
         else:
             lettresDejaDonne.append(lettre)
+            lettresDejaDonneAffiche.append(lettre)
 
-        lettresTk.set(lettresDejaDonne)
+        lettresTk.set(lettresDejaDonneAffiche)
         revelation()
 
 
@@ -147,7 +154,7 @@ def pendu ():
                 elif lettre == "c":
                     lettre = ["c", "ç"]
                 elif lettre == "a":
-                    lettre = ["a", "à"]
+                    lettre = ["a", "à", "â"]
 
                 newLettre(lettre)
 
@@ -158,7 +165,7 @@ def pendu ():
     text1 = Label(frame1, textvariable=motTk, font=("Courier New", 25)) # le mot afficher avec les _
     text1.grid(padx=25, pady=25)
 
-    text2 = Label(frame1, textvariable=lettresTk)       # les lettres echoués
+    text2 = Label(frame1, textvariable=lettresTk, font=("",13) )    # les lettres echoués
     text2.grid(padx=25, pady=25)
 
     frame2 = Frame(window)                              # frame des erreurs
@@ -182,4 +189,3 @@ def pendu ():
 
     jouer()
  
-

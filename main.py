@@ -2,6 +2,7 @@ from initRoot import *
 from penduFolder.penduFile import *
 from pianoFolder.pianoFile import *
 
+from initRoot import * ## de la part de l'ia
 
 def startPendu ():
     pendu()
